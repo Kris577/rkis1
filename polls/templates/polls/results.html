@@ -1,0 +1,24 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Результаты голосования{% endblock %}
+
+{% block content %}
+<h1>{{ question.text }}</h1>
+
+<ul class="results-list">
+    {% for choice in question.choice_set.all %}
+        <li>
+            {{ choice.choice_text }}.<br>
+            <b>{{ choice.votes }} голосов</b>
+            {% if question.votes > 0 %}
+                ({{ choice.calculate_percent }}%)
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+<br>
+<a href="{% url 'polls:index' %}">Все вопросы</a><br>
+<a href="{% url 'polls:detail' question.id %}">Вернуться к опросу</a>
+
+{% endblock %}

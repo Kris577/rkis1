@@ -1,0 +1,33 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Создать вопрос{% endblock %}
+
+{% block content %}
+<h2>Создать новый опрос</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <h3>Вопрос</h3>
+    {{ question_form.as_p }}
+
+    <h3>Варианты ответов</h3>
+    {{ choice_formset.management_form }}
+    {% for form in choice_formset %}
+        <div class="choice-form">
+            {{ form.choice_text.label_tag }}
+            {{ form.choice_text }}
+            {% if form.DELETE %}
+                {{ form.DELETE }} Удалить
+            {% endif %}
+            {% if form.non_field_errors %}
+                <p style="color: red;">{{ form.non_field_errors }}</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <button type="submit">Создать опрос</button>
+</form>
+
+<a href="{% url 'polls:index' %}">← Отмена</a>
+{% endblock %}

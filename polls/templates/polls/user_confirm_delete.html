@@ -1,0 +1,11 @@
+{% extends 'polls/base.html' %}
+{% block content %}
+
+  <h2>Удаление профиля</h2>
+  <span>Вы уверены?</span>
+  <form method="post">
+    {% csrf_token %}
+    <button class="button-change" type="submit">Да</button>
+  </form>
+
+{% endblock %}
