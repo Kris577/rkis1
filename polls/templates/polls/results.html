@@ -5,7 +5,7 @@
 {% block content %}
 <h1>{{ question.text }}</h1>
 
-<ul class="results-list">
+<ul>
     {% for choice in question.choice_set.all %}
         <li>
             {{ choice.choice_text }}.<br>

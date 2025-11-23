@@ -14,7 +14,7 @@
     <h3>Варианты ответов</h3>
     {{ choice_formset.management_form }}
     {% for form in choice_formset %}
-        <div class="choice-form">
+        <div>
             {{ form.choice_text.label_tag }}
             {{ form.choice_text }}
             {% if form.DELETE %}

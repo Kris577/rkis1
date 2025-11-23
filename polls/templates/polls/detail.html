@@ -6,22 +6,22 @@
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {% csrf_token %}
     <h1>{{ question.text }}</h1>
-    <div class="question">
+    <div>
         {% if question.image %}
-            <img class="question-img" src="{{ question.image.url }}" alt="Картинка вопроса">
+            <img src="{{ question.image.url }}" alt="Картинка вопроса">
         {% endif %}
         <div>
-            <p class="question-description"><b>Описание:</b><br>{{ question.description }}</p>
+            <p><b>Описание:</b><br>{{ question.description }}</p>
             {% if error_message %}
                 <p style="color: red;"><b>{{ error_message }}</b></p>
             {% endif %}
 
             {% for choice in question.choice_set.all %}
-                <input class="question-input" type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
                 <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
             {% endfor %}
 
-            <input class="question-button" type="submit" value="Проголосовать">
+            <input type="submit" value="Проголосовать">
         </div>
     </div>
 </form>

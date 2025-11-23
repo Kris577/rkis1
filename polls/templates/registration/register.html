@@ -1,8 +1,8 @@
 {% extends 'polls/base.html' %}
 {% block content %}
-    <form class="form-register" method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="button-change" type="submit">Зарегистрироваться</button>
+        <button type="submit">Зарегистрироваться</button>
     </form>
 {% endblock %}
