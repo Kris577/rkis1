@@ -1,25 +1,40 @@
 {% extends 'polls/base.html' %}
 {% block content %}
 
-    {% if latest_question_list %}
-        <h2>Вопросы:</h2>
-            <ol>
-            {% for question in latest_question_list %}
-                {% if question.published_recently or user.is_superuser %}
-                    <li>
-                        <h3><a href="{% url 'polls:detail' question.id %}">{{ question.text }}</a></h3>
-                        <p>{{ question.short_description }}</p>
-                        {% if question.image %}
-                        <img src="{{ question.image.url }}" alt="Изображение к вопросу">
-                        {% endif %}
-                    </li>
-                {% endif %}
-            {% endfor %}
-             </ol>
-    {% else %}
-        <h2>
-            Вопросов нет.
-        </h2>
-    {% endif %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Вопросы:</h2>
+</div>
+
+{% if latest_question_list %}
+    <div class="row row-cols-1 g-3">
+    {% for question in latest_question_list %}
+        {% if question.published_recently or user.is_superuser %}
+        <div class="col">
+            <div class="card">
+                <div class="row g-0">
+                    {% if question.image %}
+                    <div class="col-md-3">
+                        <img src="{{ question.image.url }}" class="img-fluid rounded-start" alt="Изображение вопроса">
+                    </div>
+                    {% endif %}
+                    <div class="col">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'polls:detail' question.id %}" class="text-decoration-none">
+                                    {{ question.text }}
+                                </a>
+                            </h5>
+                            <p class="card-text">{{ question.short_description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">Вопросов нет.</div>
+{% endif %}
 
 {% endblock %}

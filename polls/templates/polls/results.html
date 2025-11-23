@@ -3,22 +3,29 @@
 {% block title %}Результаты голосования{% endblock %}
 
 {% block content %}
-<h1>{{ question.text }}</h1>
+<div class="card">
+    <div class="card-body">
+        <h1>{{ question.text }}</h1>
 
-<ul>
-    {% for choice in question.choice_set.all %}
-        <li>
-            {{ choice.choice_text }}.<br>
-            <b>{{ choice.votes }} голосов</b>
-            {% if question.votes > 0 %}
-                ({{ choice.calculate_percent }}%)
-            {% endif %}
-        </li>
-    {% endfor %}
-</ul>
+        <ul class="list-group list-group-flush">
+            {% for choice in question.choice_set.all %}
+            <li class="list-group-item d-flex justify-content-between">
+                <span>{{ choice.choice_text }}</span>
+                <span>
+                    <strong>{{ choice.votes }} голосов</strong>
+                    {% if question.votes > 0 %}
+                        ({{ choice.calculate_percent }}%)
+                    {% endif %}
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 
-<br>
-<a href="{% url 'polls:index' %}">Все вопросы</a><br>
-<a href="{% url 'polls:detail' question.id %}">Вернуться к опросу</a>
+<div class="mt-3">
+    <a href="{% url 'polls:index' %}" class="btn btn-outline-secondary">Все вопросы</a>
+    <a href="{% url 'polls:detail' question.id %}" class="btn btn-outline-primary">Вернуться к опросу</a>
+</div>
 
 {% endblock %}

@@ -22,6 +22,7 @@ class Profile(generic.DetailView):
 
 class DeleteUser(generic.DeleteView):
     model = CustomUser
+    template_name = 'polls/user_confirm_delete.html'
     success_url = reverse_lazy('polls:index')
 
 def logout_user(request):

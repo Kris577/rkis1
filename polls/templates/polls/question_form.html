@@ -5,29 +5,31 @@
 {% block content %}
 <h2>Создать новый опрос</h2>
 
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" class="mt-3">
     {% csrf_token %}
 
     <h3>Вопрос</h3>
     {{ question_form.as_p }}
 
-    <h3>Варианты ответов</h3>
+    <h3 class="mt-4">Варианты ответов</h3>
     {{ choice_formset.management_form }}
     {% for form in choice_formset %}
-        <div>
+        <div class="mb-2">
             {{ form.choice_text.label_tag }}
             {{ form.choice_text }}
             {% if form.DELETE %}
-                {{ form.DELETE }} Удалить
+                <label class="form-check-inline ms-2">
+                    {{ form.DELETE }} Удалить
+                </label>
             {% endif %}
             {% if form.non_field_errors %}
-                <p style="color: red;">{{ form.non_field_errors }}</p>
+                <div class="text-danger">{{ form.non_field_errors }}</div>
             {% endif %}
         </div>
     {% endfor %}
 
-    <button type="submit">Создать опрос</button>
+    <button type="submit" class="btn btn-success">Создать опрос</button>
 </form>
 
-<a href="{% url 'polls:index' %}">← Отмена</a>
+<a href="{% url 'polls:index' %}" class="btn btn-link">← Отмена</a>
 {% endblock %}

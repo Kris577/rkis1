@@ -3,31 +3,36 @@
 {% block title %}{{ question.text }}{% endblock %}
 
 {% block content %}
-<form action="{% url 'polls:vote' question.id %}" method="post">
-    {% csrf_token %}
-    <h1>{{ question.text }}</h1>
-    <div>
+<div class="card mb-4">
+    <div class="card-body">
+        <h1 class="card-title">{{ question.text }}</h1>
+
         {% if question.image %}
-            <img src="{{ question.image.url }}" alt="Картинка вопроса">
+            <img src="{{ question.image.url }}" class="img-fluid mb-3" alt="Изображение вопроса">
         {% endif %}
-        <div>
-            <p><b>Описание:</b><br>{{ question.description }}</p>
-            {% if error_message %}
-                <p style="color: red;"><b>{{ error_message }}</b></p>
-            {% endif %}
 
+        <p><strong>Описание:</strong><br>{{ question.description }}</p>
+
+        {% if error_message %}
+            <div class="alert alert-danger">{{ error_message }}</div>
+        {% endif %}
+
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+            {% csrf_token %}
             {% for choice in question.choice_set.all %}
-                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                    <label class="form-check-label" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                </div>
             {% endfor %}
-
-            <input type="submit" value="Проголосовать">
-        </div>
+            <button type="submit" class="btn btn-primary mt-2">Проголосовать</button>
+        </form>
     </div>
-</form>
+</div>
 
-<br>
-<a href="{% url 'polls:index' %}">Все вопросы</a> <br>
-<a href="{% url 'polls:results' question.id %}">Посмотреть результаты</a>
+<div>
+    <a href="{% url 'polls:index' %}" class="btn btn-outline-secondary">Все вопросы</a>
+    <a href="{% url 'polls:results' question.id %}" class="btn btn-outline-info">Посмотреть результаты</a>
+</div>
 
 {% endblock %}
